@@ -1,6 +1,6 @@
 # tenant-ledger
 
-[![CI](https://github.com/moeez-png/tenant-ledger/actions/workflows/ci.yml/badge.svg)](https://github.com/moeez-png/tenant-ledger/actions/workflows/ci.yml)
+[![CI](https://github.com/moizmazhar37/tenant-ledger/actions/workflows/ci.yml/badge.svg)](https://github.com/moizmazhar37/tenant-ledger/actions/workflows/ci.yml)
 
 A deliberately small multi-tenant ledger, built to show CI discipline rather than features.
 Organisations have members and ledger entries. A webhook receives payment events from a
