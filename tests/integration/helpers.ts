@@ -28,6 +28,14 @@ export function postgresErrorCode(error: unknown): string | undefined {
   }
   return undefined;
 }
+// export function postgresErrorCode(error: unknown): string | undefined {
+//   const candidates = [error, (error as { cause?: unknown } | null)?.cause];
+//   for (const candidate of candidates) {
+//     const code = (candidate as { code?: unknown } | null)?.code;
+//     if (typeof code === 'string') return code;
+//   }
+//   return undefined;
+// }
 
 /** Every test in the calling file starts from the two seeded organisations and nothing else. */
 export function resetDatabaseBeforeEach(): void {
