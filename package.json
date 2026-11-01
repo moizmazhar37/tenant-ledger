@@ -17,7 +17,10 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx scripts/migrate.ts",
     "db:seed": "tsx scripts/seed.ts",
-    "webhook:send": "tsx scripts/send-webhook.ts"
+    "webhook:send": "tsx scripts/send-webhook.ts",
+    "test": "vitest run",
+    "test:unit": "vitest run --project unit",
+    "test:integration": "vitest run --project integration"
   },
   "dependencies": {
     "drizzle-orm": "0.45.4",
@@ -37,6 +40,7 @@
     "eslint-config-next": "16.4.1",
     "prettier": "3.9.10",
     "tsx": "4.23.15",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "vitest": "4.1.12"
   }
 }
