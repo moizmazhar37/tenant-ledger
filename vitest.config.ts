@@ -25,6 +25,7 @@ export default defineConfig({
           name: 'integration',
           include: ['tests/integration/**/*.test.ts'],
           globalSetup: ['tests/integration/global-setup.ts'],
+          setupFiles: ['tests/integration/setup.ts'],
           // Files share one database and reset it between tests, so they run serially.
           fileParallelism: false,
           testTimeout: 30_000,
