@@ -12,7 +12,9 @@ import { SEED } from '@/db/seed';
 import { ledgerRepository } from '@/db/tenant';
 import { serverEnv } from '@/env';
 import { buildSignatureHeader, SIGNATURE_HEADER } from '@/lib/webhooks/signature';
-import { postgresErrorCode } from './helpers';
+import { postgresErrorCode, resetDatabaseBeforeEach } from './helpers';
+
+resetDatabaseBeforeEach();
 
 const SEEDED_ENTRY_COUNT = Object.values(SEED).reduce((n, t) => n + t.entries.length, 0);
 

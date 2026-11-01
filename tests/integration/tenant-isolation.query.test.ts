@@ -14,7 +14,9 @@ import { createDatabase, getDb } from '@/db/client';
 import { serverEnv } from '@/env';
 import { SEED } from '@/db/seed';
 import { ledgerRepository, TENANT_ROLE, TENANT_SETTING, withTenant } from '@/db/tenant';
-import { postgresErrorCode } from './helpers';
+import { postgresErrorCode, resetDatabaseBeforeEach } from './helpers';
+
+resetDatabaseBeforeEach();
 
 const { acme, globex } = SEED;
 const acmeEntryIds = acme.entries.map((entry) => entry.id).sort();

@@ -1,6 +1,8 @@
+import { beforeEach } from 'vitest';
 import { NextRequest } from 'next/server';
 import { getDb } from '@/db/client';
 import { createSession, SESSION_COOKIE } from '@/lib/auth/session';
+import { resetDatabase } from '../support/database';
 
 export async function sessionCookieFor(memberId: string): Promise<string> {
   const { token } = await createSession(getDb(), memberId);
@@ -25,4 +27,11 @@ export function postgresErrorCode(error: unknown): string | undefined {
     if (typeof code === 'string') return code;
   }
   return undefined;
+}
+
+/** Every test in the calling file starts from the two seeded organisations and nothing else. */
+export function resetDatabaseBeforeEach(): void {
+  beforeEach(async () => {
+    await resetDatabase(getDb());
+  });
 }

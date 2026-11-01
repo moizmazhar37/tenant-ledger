@@ -6,7 +6,9 @@ import { GET as listEntries } from '@/app/api/entries/route';
 import { getDb } from '@/db/client';
 import { sessions } from '@/db/schema';
 import { SEED } from '@/db/seed';
-import { getRequest, routeParams, sessionCookieFor } from './helpers';
+import { getRequest, routeParams, sessionCookieFor, resetDatabaseBeforeEach } from './helpers';
+
+resetDatabaseBeforeEach();
 
 function requestEntry(id: string, cookie?: string) {
   return getEntry(getRequest(`/api/entries/${id}`, cookie), routeParams({ id }));
