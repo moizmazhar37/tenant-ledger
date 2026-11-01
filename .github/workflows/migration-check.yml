@@ -1,0 +1,62 @@
+name: Migration check
+
+on:
+  pull_request:
+    paths:
+      - 'drizzle/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  schema-drift:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: tenant_ledger_migration_check
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U postgres -d tenant_ledger_migration_check"
+          --health-interval 2s
+          --health-timeout 5s
+          --health-retries 20
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/tenant_ledger_migration_check
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+
+      - name: Migration history is internally consistent
+        run: npx drizzle-kit check
+
+      - name: Schema has no changes without a migration
+        run: |
+          npm run db:generate
+          if [ -n "$(git status --porcelain -- drizzle)" ]; then
+            echo "::error::src/db/schema.ts has changes that no migration captures. Run 'npm run db:generate' and commit the result."
+            git status --porcelain -- drizzle
+            exit 1
+          fi
+
+      - name: Migrations apply cleanly to an empty database
+        run: npm run db:migrate
+
+      - name: Applied schema matches the committed snapshot
+        run: npm run db:snapshot:check
