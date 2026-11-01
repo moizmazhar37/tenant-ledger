@@ -17,7 +17,7 @@ export function isUuid(value: string): boolean {
 
 export type Queryable = PgDatabase<PostgresJsQueryResultHKT, typeof schema>;
 
-export type NewEntryFromEvent = Omit<NewLedgerEntry, 'id' | 'organisationId' | 'receivedAt'>;
+export type NewEntryFromEvent = Omit<NewLedgerEntry, 'organisationId' | 'receivedAt'>;
 
 export interface CurrencyTotal {
   currency: string;
